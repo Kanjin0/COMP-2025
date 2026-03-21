@@ -1,0 +1,24 @@
+RESERVED(++)
+RESERVED(--)
+RESERVED(Integer)
+RESERVED(null)
+RESERVED(System)
+RESERVED(abstract)
+RESERVED(continue)
+IDENTIFIER(fornew)
+RESERVED(switch)
+RESERVED(assert)
+RESERVED(default)
+RESERVED(package)
+RESERVED(synchronized)
+RESERVED(do)
+RESERVED(goto)
+RESERVED(private)
+Line 17, col 10: illegal character ()
+Line 17, col 11: illegal character ()
+Line 17, col 12: illegal character ()
+Line 17, col 13: illegal character ()
+Line 17, col 19: illegal character ()
+Line 26, col 35: illegal character ()
+Line 35, col 35: illegal character ()
+Line 44, col 35: illegal character ()

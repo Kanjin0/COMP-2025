@@ -1,0 +1,57 @@
+CLASS
+IDENTIFIER(Sopa)
+LBRACE
+PUBLIC
+STATIC
+VOID
+IDENTIFIER(main)
+LPAR
+STRING
+LSQ
+RSQ
+IDENTIFIER(args)
+RPAR
+LBRACE
+STRLIT("Duas")
+PLUS
+STRLIT("linhas de string")
+STRING
+IDENTIFIER(nome)
+ASSIGN
+Line 5, col 39: invalid escape sequence (\a)
+SEMICOLON
+PRINT
+LPAR
+IDENTIFIER(nome)
+RPAR
+SEMICOLON
+IDENTIFIER(Ststem)
+Line 7, col 23: illegal character (.)
+IDENTIFIER(out)
+Line 7, col 27: illegal character (.)
+IDENTIFIER(print)
+LPAR
+Line 7, col 34: unterminated string literal
+Line 7, col 74: invalid escape sequence (\*)
+Line 7, col 76: invalid escape sequence (\*)
+Line 7, col 78: invalid escape sequence (\*)
+Line 7, col 81: invalid escape sequence (\*)
+Line 7, col 84: invalid escape sequence (\*)
+Line 7, col 92: invalid escape sequence (\*)
+Line 7, col 57: unterminated string literal
+STAR
+DIV
+IDENTIFIER(comentario)
+IDENTIFIER(que)
+IDENTIFIER(nao)
+IDENTIFIER(comeca)
+STAR
+RESERVED(++)
+RESERVED(--)
+NATURAL(1210)
+IDENTIFIER(nem)
+IDENTIFIER(acaba)
+STAR
+Line 13, col 27: illegal character (\)
+RBRACE
+RBRACE

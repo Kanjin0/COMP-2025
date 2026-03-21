@@ -1,0 +1,66 @@
+IDENTIFIER(recurso)
+Line 1, col 9: illegal character (&)
+IDENTIFIER(recurso)
+Line 2, col 11: invalid escape sequence (\5)
+Line 2, col 20: invalid escape sequence (\x)
+Line 2, col 8: unterminated string literal
+Line 2, col 32: invalid escape sequence (\g)
+Line 3, col 5: invalid escape sequence (\g)
+Line 4, col 5: invalid escape sequence (\g)
+Line 4, col 1: unterminated string literal
+Line 4, col 12: unterminated string literal
+DECIMAL(3.333)
+IDENTIFIER(_e_1)
+IDENTIFIER(recurso)
+STRLIT("")
+Line 7, col 2: illegal character (\)
+Line 7, col 3: unterminated string literal
+Line 7, col 13: illegal character (#)
+Line 7, col 14: unterminated string literal
+Line 7, col 19: illegal character (#)
+IDENTIFIER(linha)
+Line 7, col 25: illegal character (#)
+Line 8, col 1: illegal character (`)
+Line 8, col 2: illegal character (')
+Line 9, col 1: illegal character ()
+STRLIT("outraLinha")
+Line 11, col 1: illegal character (#)
+STRLIT("recurso''")
+Line 11, col 13: illegal character (?)
+IDENTIFIER(xD)
+Line 12, col 4: illegal character (?)
+Line 12, col 5: illegal character (\)
+IDENTIFIER(n)
+Line 12, col 7: illegal character (|)
+Line 12, col 8: illegal character (')
+Line 12, col 9: illegal character (')
+INT
+IDENTIFIER(a)
+ASSIGN
+IDENTIFIER(x)
+Line 13, col 9: illegal character (?)
+NATURAL(0)
+NATURAL(0)
+NATURAL(123321)
+IDENTIFIER(ttrhwrhewrjree)
+Line 15, col 9: illegal character (?)
+Line 15, col 25: illegal character (?)
+STRLIT("asdadasdas")
+STRLIT("dsadasd sadsad")
+STRLIT("dasdsadas\t\tasdasd123")
+STRLIT("dsadasdas\n")
+IDENTIFIER(sd)
+Line 20, col 3: unterminated string literal
+IDENTIFIER(duaslinhas)
+IDENTIFIER(ultimalinha)
+Line 21, col 12: unterminated string literal
+STRLIT("")
+STRLIT("\tadssadsadsa\t")
+STRLIT("\\")
+STRLIT("\f")
+STRLIT("\r\f")
+STRLIT("aspas\"")
+STRLIT("\\dsadasdsadas")
+Line 28, col 1: illegal character (\)
+Line 28, col 3: invalid escape sequence (\b)
+Line 28, col 2: unterminated string literal
