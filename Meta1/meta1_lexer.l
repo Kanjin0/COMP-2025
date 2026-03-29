@@ -7,6 +7,7 @@
 
     int line = 1;
     int column = 1;
+    int print_tokens = 0;
 
     char* string_buffer = NULL;
     int string_buffer_size = 0;
@@ -65,33 +66,7 @@
         string_has_invalid_escape = 0;
     }
 
-    /* Helper function to print string with escape sequences */
-    void print_escaped_string(char *str) {
-        printf("STRLIT(\"");
-        for (int i = 0; str[i] != '\0'; i++) {
-            switch (str[i]) {
-                case '\n': printf("\\n"); break;
-                case '\t': printf("\\t"); break;
-                case '\r': printf("\\r"); break;
-                case '\f': printf("\\f"); break;
-                case '\\': printf("\\\\"); break;
-                case '"': printf("\\\""); break;
-                default: printf("%c", str[i]); break;
-            }
-        }
-        printf("\")\n");
-    }
-
 %}
-
-digit       [0-9]           
-
-/* NATURAL: 0 or sequence starting with non-zero digit, can have underscores, ends with digit */
-natural     0|[1-9]([0-9_]*[0-9])?
-
-/* Number parts */
-digits      {digit}([0-9_]*{digit})?
-exponent    [eE][+-]?{digits}
 
 BOOLLIT             "true"|"false"
 AND                 "&&"
@@ -137,7 +112,7 @@ STRING              "String"
 VOID                "void"
 WHILE               "while"
 
-/* Only these five are RESERVED */
+/* All Java keywords not used in Juc - must be RESERVED */
 INCREMENT           "++"
 DECREMENT           "--"
 NULL_LIT            "null"
@@ -183,7 +158,13 @@ SUPER_ID            "super"
 FOR_ID              "for"
 NEW_ID              "new"
 
-whitespace [ \t\n\r]
+digit       [0-9]           
+/* Number parts */
+digits      {digit}([0-9_]*{digit})?
+exponent    [eE][+-]?{digits}
+
+/* NATURAL: 0 or sequence starting with non-zero digit, can have underscores, ends with digit */
+natural     0|[1-9]([0-9_]*[0-9])?
 
 /* it needs to be down here, otherwise, some of the reserved words or even other ones might get mistaken as an identifier due to precendence in rule position */
 identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
@@ -195,99 +176,99 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
     /* yytext is a pointer to a string */
 
     /* RESERVED tokens - these must come first */
-{INCREMENT}         { printf("RESERVED(%s)\n", yytext); }
-{DECREMENT}         { printf("RESERVED(%s)\n", yytext); }
-{NULL_LIT}          { printf("RESERVED(%s)\n", yytext); }
-{INTEGER_ID}        { printf("RESERVED(%s)\n", yytext); }
-{SYSTEM_ID}         { printf("RESERVED(%s)\n", yytext); }
-{ABSTRACT_ID}       { printf("RESERVED(%s)\n", yytext); }
-{CONTINUE_ID}       { printf("RESERVED(%s)\n", yytext); }
-{SWITCH_ID}         { printf("RESERVED(%s)\n", yytext); }
-{ASSERT_ID}         { printf("RESERVED(%s)\n", yytext); }
-{DEFAULT_ID}        { printf("RESERVED(%s)\n", yytext); }
-{PACKAGE_ID}        { printf("RESERVED(%s)\n", yytext); }
-{SYNCHRONIZED_ID}   { printf("RESERVED(%s)\n", yytext); }
-{DO_ID}             { printf("RESERVED(%s)\n", yytext); }
-{GOTO_ID}           { printf("RESERVED(%s)\n", yytext); }
-{PRIVATE}           { printf("RESERVED(%s)\n", yytext); }
-{THIS_ID}           { printf("RESERVED(%s)\n", yytext); }
-{BREAK_ID}          { printf("RESERVED(%s)\n", yytext); }
-{IMPLEMENTS_ID}     { printf("RESERVED(%s)\n", yytext); }
-{PROTECTED_ID}      { printf("RESERVED(%s)\n", yytext); }
-{THROW_ID}          { printf("RESERVED(%s)\n", yytext); }
-{BYTE_ID}           { printf("RESERVED(%s)\n", yytext); }
-{IMPORT_ID}         { printf("RESERVED(%s)\n", yytext); }
-{THROWS_ID}         { printf("RESERVED(%s)\n", yytext); }
-{CASE_ID}           { printf("RESERVED(%s)\n", yytext); }
-{ENUM_ID}           { printf("RESERVED(%s)\n", yytext); }
-{INSTANCEOF_ID}     { printf("RESERVED(%s)\n", yytext); }
-{TRANSIENT_ID}      { printf("RESERVED(%s)\n", yytext); }
-{CATCH_ID}          { printf("RESERVED(%s)\n", yytext); }
-{EXTENDS_ID}        { printf("RESERVED(%s)\n", yytext); }
-{SHORT_ID}          { printf("RESERVED(%s)\n", yytext); }
-{TRY_ID}            { printf("RESERVED(%s)\n", yytext); }
-{CHAR_ID}           { printf("RESERVED(%s)\n", yytext); }
-{FINAL_ID}          { printf("RESERVED(%s)\n", yytext); }
-{INTERFACE_ID}      { printf("RESERVED(%s)\n", yytext); }
-{FINALLY_ID}        { printf("RESERVED(%s)\n", yytext); }
-{LONG_ID}           { printf("RESERVED(%s)\n", yytext); }
-{STRICTFP_ID}       { printf("RESERVED(%s)\n", yytext); }
-{VOLATILE_ID}       { printf("RESERVED(%s)\n", yytext); }
-{CONST_ID}          { printf("RESERVED(%s)\n", yytext); }
-{FLOAT_ID}          { printf("RESERVED(%s)\n", yytext); }
-{NATIVE_ID}         { printf("RESERVED(%s)\n", yytext); }
-{SUPER_ID}          { printf("RESERVED(%s)\n", yytext); }
-{FOR_ID}            { printf("RESERVED(%s)\n", yytext); }
-{NEW_ID}            { printf("RESERVED(%s)\n", yytext); }
+{INCREMENT}         { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{DECREMENT}         { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{NULL_LIT}          { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{INTEGER_ID}        { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{SYSTEM_ID}         { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{ABSTRACT_ID}       { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{CONTINUE_ID}       { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{SWITCH_ID}         { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{ASSERT_ID}         { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{DEFAULT_ID}        { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{PACKAGE_ID}        { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{SYNCHRONIZED_ID}   { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{DO_ID}             { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{GOTO_ID}           { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{PRIVATE}           { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{THIS_ID}           { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{BREAK_ID}          { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{IMPLEMENTS_ID}     { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{PROTECTED_ID}      { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{THROW_ID}          { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{BYTE_ID}           { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{IMPORT_ID}         { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{THROWS_ID}         { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{CASE_ID}           { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{ENUM_ID}           { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{INSTANCEOF_ID}     { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{TRANSIENT_ID}      { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{CATCH_ID}          { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{EXTENDS_ID}        { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{SHORT_ID}          { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{TRY_ID}            { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{CHAR_ID}           { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{FINAL_ID}          { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{INTERFACE_ID}      { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{FINALLY_ID}        { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{LONG_ID}           { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{STRICTFP_ID}       { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{VOLATILE_ID}       { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{CONST_ID}          { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{FLOAT_ID}          { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{NATIVE_ID}         { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{SUPER_ID}          { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{FOR_ID}            { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+{NEW_ID}            { if (print_tokens) printf("RESERVED(%s)\n", yytext); }
 
     /* Multi-character operators */
-{AND}               { printf("AND\n"); }
-{OR}                { printf("OR\n"); }
-{EQ}                { printf("EQ\n"); }
-{NE}                { printf("NE\n"); }
-{GE}                { printf("GE\n"); }
-{LE}                { printf("LE\n"); }
-{ARROW}             { printf("ARROW\n"); }
-{LSHIFT}            { printf("LSHIFT\n"); }
-{RSHIFT}            { printf("RSHIFT\n"); }
-{XOR}               { printf("XOR\n"); }
+{AND}               { if (print_tokens) printf("AND\n"); }
+{OR}                { if (print_tokens) printf("OR\n"); }
+{EQ}                { if (print_tokens) printf("EQ\n"); }
+{NE}                { if (print_tokens) printf("NE\n"); }
+{GE}                { if (print_tokens) printf("GE\n"); }
+{LE}                { if (print_tokens) printf("LE\n"); }
+{ARROW}             { if (print_tokens) printf("ARROW\n"); }
+{LSHIFT}            { if (print_tokens) printf("LSHIFT\n"); }
+{RSHIFT}            { if (print_tokens) printf("RSHIFT\n"); }
+{XOR}               { if (print_tokens) printf("XOR\n"); }
 
     /* Single-character operators - STAR absolutely first */
-{STAR}              { printf("STAR\n"); }
-{DIV}               { printf("DIV\n"); }
-{MOD}               { printf("MOD\n"); }
-{PLUS}              { printf("PLUS\n"); }
-{MINUS}             { printf("MINUS\n"); }
-{ASSIGN}            { printf("ASSIGN\n"); }
-{COMMA}             { printf("COMMA\n"); }
-{LT}                { printf("LT\n"); }
-{GT}                { printf("GT\n"); }
-{NOT}               { printf("NOT\n"); }
-{LPAR}              { printf("LPAR\n"); }
-{RPAR}              { printf("RPAR\n"); }
-{LBRACE}            { printf("LBRACE\n"); }
-{RBRACE}            { printf("RBRACE\n"); }
-{LSQ}               { printf("LSQ\n"); }
-{RSQ}               { printf("RSQ\n"); }
-{SEMICOLON}         { printf("SEMICOLON\n"); }
+{STAR}              { if (print_tokens) printf("STAR\n"); }
+{DIV}               { if (print_tokens) printf("DIV\n"); }
+{MOD}               { if (print_tokens) printf("MOD\n"); }
+{PLUS}              { if (print_tokens) printf("PLUS\n"); }
+{MINUS}             { if (print_tokens) printf("MINUS\n"); }
+{ASSIGN}            { if (print_tokens) printf("ASSIGN\n"); }
+{COMMA}             { if (print_tokens) printf("COMMA\n"); }
+{LT}                { if (print_tokens) printf("LT\n"); }
+{GT}                { if (print_tokens) printf("GT\n"); }
+{NOT}               { if (print_tokens) printf("NOT\n"); }
+{LPAR}              { if (print_tokens) printf("LPAR\n"); }
+{RPAR}              { if (print_tokens) printf("RPAR\n"); }
+{LBRACE}            { if (print_tokens) printf("LBRACE\n"); }
+{RBRACE}            { if (print_tokens) printf("RBRACE\n"); }
+{LSQ}               { if (print_tokens) printf("LSQ\n"); }
+{RSQ}               { if (print_tokens) printf("RSQ\n"); }
+{SEMICOLON}         { if (print_tokens) printf("SEMICOLON\n"); }
 
-    /* Keywords */
-{BOOLLIT}           { printf("BOOLLIT(%s)\n",yytext); }
-{BOOL}              { printf("BOOL\n"); }
-{CLASS}             { printf("CLASS\n"); }
-{DOTLENGTH}         { printf("DOTLENGTH\n"); }
-{DOUBLE}            { printf("DOUBLE\n"); }
-{ELSE}              { printf("ELSE\n"); }
-{IF}                { printf("IF\n"); }
-{INT}               { printf("INT\n"); }
-{PRINT}             { printf("PRINT\n"); }
-{PARSEINT}          { printf("PARSEINT\n"); }
-{PUBLIC}            { printf("PUBLIC\n"); }
-{RETURN}            { printf("RETURN\n"); }
-{STATIC}            { printf("STATIC\n"); }
-{STRING}            { printf("STRING\n"); }
-{VOID}              { printf("VOID\n"); }
-{WHILE}             { printf("WHILE\n"); }
+    /* Keywords that ARE used in Juc */
+{BOOLLIT}           { if (print_tokens) printf("BOOLLIT(%s)\n",yytext); }
+{BOOL}              { if (print_tokens) printf("BOOL\n"); }
+{CLASS}             { if (print_tokens) printf("CLASS\n"); }
+{DOTLENGTH}         { if (print_tokens) printf("DOTLENGTH\n"); }
+{DOUBLE}            { if (print_tokens) printf("DOUBLE\n"); }
+{ELSE}              { if (print_tokens) printf("ELSE\n"); }
+{IF}                { if (print_tokens) printf("IF\n"); }
+{INT}               { if (print_tokens) printf("INT\n"); }
+{PRINT}             { if (print_tokens) printf("PRINT\n"); }
+{PARSEINT}          { if (print_tokens) printf("PARSEINT\n"); }
+{PUBLIC}            { if (print_tokens) printf("PUBLIC\n"); }
+{RETURN}            { if (print_tokens) printf("RETURN\n"); }
+{STATIC}            { if (print_tokens) printf("STATIC\n"); }
+{STRING}            { if (print_tokens) printf("STRING\n"); }
+{VOID}              { if (print_tokens) printf("VOID\n"); }
+{WHILE}             { if (print_tokens) printf("WHILE\n"); }
 
     /* Comment patterns */
 "/*"                { 
@@ -299,36 +280,28 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
 
     /* treating general stuff */
 
-    /* DECIMAL patterns - must come BEFORE natural */
-    /* Format: integer part . fractional part exponent? */
-{natural}"."{digits}{exponent}?       { printf("DECIMAL(%s)\n",yytext); }
-    /* Format: integer part . exponent? (with optional fractional) */
-{natural}"."{digits}?{exponent}?      { printf("DECIMAL(%s)\n",yytext); }
-    /* Format: . fractional part exponent? */
-"."{digits}{exponent}?                 { printf("DECIMAL(%s)\n",yytext); }
-    /* Format: integer part exponent (no dot) */
-{natural}{exponent}                   { printf("DECIMAL(%s)\n",yytext); }
+    /* DECIMAL patterns - ordered from most specific to least specific */
+{digits}"."{digits}{exponent}          { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+{digits}"."{digits}                    { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+{digits}"."{exponent}                  { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+{digits}"."                            { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+"."{digits}{exponent}                   { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+"."{digits}                             { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+{digits}{exponent}                     { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
 
     /* Then NATURAL */
-{natural}                          { printf("NATURAL(%s)\n",yytext); }
+{natural}                          { if (print_tokens) printf("NATURAL(%s)\n",yytext); }
 
+{identifier}                       { if (print_tokens) printf("IDENTIFIER(%s)\n",yytext); }
 
-    /* Then IDENTIFIER */
-{identifier}                       { printf("IDENTIFIER(%s)\n",yytext); }
-
-{whitespace} { 
-    if (yytext[0] == '\n') { 
-        line++; 
-        column = 1;
-    } else if (yytext[0] == '\r') {
-        /* Handle carriage return */
-        column = 1;
-    } else if (yytext[0] == '\t') {
-        column += 8 - ((column - 1) % 8);
-    }
-    /* Ignore other whitespace */
+\n|\r\n|\r                 { 
+    line++;
+    column = 1;
 }
 
+[ \t\f]                    { 
+    /* No printing - just consume whitespace */
+}
 
     /* treating strings */
 
@@ -339,57 +312,31 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
     string_start_column = column - yyleng;
 }
 
-    /* Valid escape sequences */
+    /* Valid escape sequences - store as backslash + character */
 <STRLIT>\\[ntrf\\\"]      {
-    ensure_string_buffer_capacity(1);
-    switch(yytext[1]) 
-    {
-        case 'n' : string_buffer[string_buffer_index++] = '\n'; break;
-        case 't' : string_buffer[string_buffer_index++] = '\t'; break;
-        case 'r' : string_buffer[string_buffer_index++] = '\r'; break;
-        case 'f' : string_buffer[string_buffer_index++] = '\f'; break;
-        case '\\': string_buffer[string_buffer_index++] = '\\'; break;
-        case '"' : string_buffer[string_buffer_index++] = '"'; break;
-    }
-}
-
-    /* Backslash at end of line - line continuation */
-<STRLIT>\\\n               {
-    line++;
-    column = 1;
-    /* Don't add anything to buffer */
-}
-
-<STRLIT>\\\r\n             {
-    line++;
-    column = 1;
-    /* Don't add anything to buffer */
-}
-
-<STRLIT>\\\r               {
-    line++;
-    column = 1;
-    /* Don't add anything to buffer */
+    ensure_string_buffer_capacity(2);
+    string_buffer[string_buffer_index++] = '\\';
+    string_buffer[string_buffer_index++] = yytext[1];
 }
 
     /* Invalid escape sequences - any other backslash combination */
-<STRLIT>\\[^ntrf\\\n\r\"]   { 
-    printf("Line %d, col %d: invalid escape sequence (%s)\n",
-           line, column - yyleng, yytext);
+<STRLIT>\\|\\[^ntrf\\\n\r\"]   { 
+    printf("Line %d, col %d: invalid escape sequence (%s)\n", line, column - yyleng, yytext);
     string_has_invalid_escape = 1;
+    /* Don't add anything to buffer for invalid escapes - but continue the string */
 }
 
-    /* Unterminated string - newline without backslash */
-<STRLIT>\n                {
+    /* Unterminated string - newline without closing quote */
+<STRLIT>\r\n|\n|\r                {
     printf("Line %d, col %d: unterminated string literal\n", 
            string_start_line, string_start_column);
-    
     free_string_buffer();
     BEGIN(INITIAL);
-    /* Let whitespace rule handle the newline */
+    line++;
+    column = 1;
 }
 
-    /* Normal string characters */
+    /* Normal string characters - store as-is */
 <STRLIT>[^\\\n\r\"]+      {
     ensure_string_buffer_capacity(yyleng);
     memcpy(string_buffer + string_buffer_index, yytext, yyleng);
@@ -399,14 +346,14 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
     /* End of string */
 <STRLIT>"\""              { 
     if (string_has_invalid_escape) {
-        /* String had invalid escapes - discard it */
+        /* String had invalid escapes - already reported, just drop the string */
         free_string_buffer();
         BEGIN(INITIAL);
     } else {
         /* Valid string - print it */
         ensure_string_buffer_capacity(1);
         string_buffer[string_buffer_index] = '\0';
-        print_escaped_string(string_buffer);
+        if (print_tokens) printf("STRLIT(\"%s\")\n", string_buffer);
         free_string_buffer();
         BEGIN(INITIAL);
     }
@@ -427,12 +374,11 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
 <MLINE_COMMENT>"*/"              { BEGIN(INITIAL); }
 
 <MLINE_COMMENT>\n|\r\n|\r        { 
-    /* Handle all types of line endings */
-    if (yytext[yyleng-1] == '\n' || yytext[0] == '\r') line++; 
+    line++; 
     column = 1; 
 }
 
-<MLINE_COMMENT>.                 { /* ignore */ }
+<MLINE_COMMENT>.                 { }
 
 <MLINE_COMMENT><<EOF>>           { 
     printf("Line %d, col %d: unterminated comment\n", 
@@ -442,12 +388,12 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
 }
 
 <SLINE_COMMENT>\n|\r\n|\r        { 
-    if (yytext[yyleng-1] == '\n' || yytext[0] == '\r') line++; 
+    line++; 
     column = 1; 
     BEGIN(INITIAL); 
 }
 
-<SLINE_COMMENT>.                 { /* ignore */ }
+<SLINE_COMMENT>.                 { }
 
 <SLINE_COMMENT><<EOF>>           { BEGIN(INITIAL); }
 
@@ -462,7 +408,10 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
 %%
 
 extern int yylex();
-int main() {
+int main(int argc, char **argv) {
+    if (argc > 1 && strcmp(argv[1], "-l") == 0) {
+        print_tokens = 1;
+    }
     yylex();
     free_string_buffer();
     return 0;
