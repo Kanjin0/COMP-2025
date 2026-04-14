@@ -194,15 +194,15 @@ Line 161, col 5: illegal character (&)
 MOD
 AND
 OR
-Line 161, col 22: illegal character (&)
-Line 161, col 23: illegal character (|)
+Line 161, col 15: illegal character (&)
+Line 161, col 16: illegal character (|)
 AND
-Line 161, col 27: illegal character (&)
+Line 161, col 20: illegal character (&)
 MOD
 MOD
 MOD
 OR
-Line 161, col 35: illegal character (|)
+Line 161, col 28: illegal character (|)
 ASSIGN
 EQ
 ASSIGN
@@ -239,7 +239,7 @@ COMMA
 COMMA
 COMMA
 DIV
-Line 170, col 19: illegal character (&)
+Line 170, col 5: illegal character (&)
 Line 172, col 1: illegal character (&)
 NATURAL(6)
 NATURAL(6)
@@ -249,12 +249,12 @@ NATURAL(7)
 AND
 AND
 NATURAL(6)
-Line 172, col 32: illegal character (&)
-Line 172, col 34: illegal character (&)
+Line 172, col 25: illegal character (&)
+Line 172, col 27: illegal character (&)
 DIV
 NATURAL(6)
-Line 172, col 38: illegal character (&)
-Line 172, col 49: illegal character (&)
+Line 172, col 31: illegal character (&)
+Line 172, col 34: illegal character (&)
 EQ
 ASSIGN
 EQ
@@ -339,17 +339,11 @@ STRLIT("sui ghasuidhasui dhiash ")
 STRLIT("")
 IDENTIFIER(sapdj)
 IDENTIFIER(a)
-STRLIT("jan adn sçjso aso")
-IDENTIFIER(oashdao)
-IDENTIFIER(saosdjasodj)
-IDENTIFIER(a)
-Line 191, col 23: illegal character (\)
-IDENTIFIER(U)
-Line 191, col 25: unterminated string literal
-STRLIT("asiod oa das jas")
-IDENTIFIER(asidj)
-IDENTIFIER(aspjdas)
-Line 192, col 16: illegal character (\)
-IDENTIFIER(f)
+Line 190, col 29: invalid escape sequence (\)
+Line 190, col 10: unterminated string literal
+Line 191, col 23: invalid escape sequence (\U)
+Line 192, col 18: invalid escape sequence (\)
+Line 192, col 1: unterminated string literal
+Line 193, col 1: unterminated string literal
 STRLIT("aspj dpas !")
 STRLIT("")

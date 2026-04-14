@@ -18,7 +18,7 @@ STRLIT("linhas de string")
 STRING
 IDENTIFIER(nome)
 ASSIGN
-Line 5, col 39: invalid escape sequence (\a)
+Line 5, col 25: invalid escape sequence (\a)
 SEMICOLON
 PRINT
 LPAR
@@ -26,19 +26,19 @@ IDENTIFIER(nome)
 RPAR
 SEMICOLON
 IDENTIFIER(Ststem)
-Line 7, col 23: illegal character (.)
+Line 7, col 9: illegal character (.)
 IDENTIFIER(out)
-Line 7, col 27: illegal character (.)
+Line 7, col 13: illegal character (.)
 IDENTIFIER(print)
 LPAR
-Line 7, col 34: unterminated string literal
-Line 7, col 74: invalid escape sequence (\*)
-Line 7, col 76: invalid escape sequence (\*)
-Line 7, col 78: invalid escape sequence (\*)
-Line 7, col 81: invalid escape sequence (\*)
-Line 7, col 84: invalid escape sequence (\*)
-Line 7, col 92: invalid escape sequence (\*)
-Line 7, col 57: unterminated string literal
+Line 7, col 20: unterminated string literal
+Line 8, col 20: invalid escape sequence (\*)
+Line 8, col 22: invalid escape sequence (\*)
+Line 8, col 24: invalid escape sequence (\*)
+Line 8, col 27: invalid escape sequence (\*)
+Line 8, col 30: invalid escape sequence (\*)
+Line 8, col 38: invalid escape sequence (\*)
+Line 8, col 3: unterminated string literal
 STAR
 DIV
 IDENTIFIER(comentario)
@@ -52,6 +52,6 @@ NATURAL(1210)
 IDENTIFIER(nem)
 IDENTIFIER(acaba)
 STAR
-Line 13, col 27: illegal character (\)
+Line 15, col 13: illegal character (\)
 RBRACE
 RBRACE

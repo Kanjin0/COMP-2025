@@ -1,9 +1,4 @@
-Line 1, col 1: unterminated string literal
-STRLIT("isto é outra frase ")
-Line 2, col 2: illegal character (\)
-IDENTIFIER(n)
-Line 2, col 4: illegal character (\)
-IDENTIFIER(g)
-Line 2, col 6: illegal character (\)
-IDENTIFIER(r)
-Line 2, col 8: unterminated string literal
+Line 1, col 1: unterminated string literal
+Line 2, col 23: invalid escape sequence (\)
+Line 2, col 2: unterminated string literal
+Line 3, col 4: invalid escape sequence (\g)

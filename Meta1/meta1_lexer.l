@@ -285,8 +285,8 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
 {digits}"."{digits}                    { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
 {digits}"."{exponent}                  { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
 {digits}"."                            { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
-"."{digits}{exponent}                   { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
-"."{digits}                             { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+"."{digits}{exponent}                  { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+"."{digits}                            { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
 {digits}{exponent}                     { if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
 
     /* Then NATURAL */

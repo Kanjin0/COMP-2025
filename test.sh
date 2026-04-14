@@ -19,8 +19,8 @@ exe="$1"
 accepted=0
 total=0
 
-if [[ -d meta1 ]]; then
-    for inp in meta1/*.java; do
+if [[ -d meta1 ]]; then #if you want to run meta1 tests too, change the "meta1" to "java/meta1"
+    for inp in java/meta1/*.java; do
         total=$(( $total + 1 ))
         echo "$inp"
         out=${inp%.java}.out
@@ -42,8 +42,8 @@ if [[ -d meta1 ]]; then
     done
 fi
 
-if [[ -d meta2 ]]; then
-    for inp in meta2/*.java; do
+if [[ -d java/meta2 ]]; then #if you want to run meta2 tests too, change "meta2" to "java/meta2"
+    for inp in java/meta2/*.java; do
         total=$(( $total + 1 ))
         echo "$inp"
         out=${inp%.java}.out

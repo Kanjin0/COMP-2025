@@ -28,11 +28,11 @@ IDENTIFIER(able)
 NATURAL(0)
 NATURAL(2)
 DECIMAL(1.e0_0)
-STRLIT("")
-Line 20, col 2: illegal character (\)
-Line 20, col 3: illegal character (\)
-Line 20, col 4: unterminated string literal
-Line 20, col 7: unterminated string literal
+Line 19, col 2: invalid escape sequence (\)
+Line 19, col 1: unterminated string literal
+STRLIT("\\")
+Line 21, col 5: invalid escape sequence (\)
+Line 21, col 1: unterminated string literal
 STRLIT("\\")
 IDENTIFIER(asd3)
 DECIMAL(.3)
@@ -43,4 +43,4 @@ IDENTIFIER(e)
 MINUS
 NATURAL(1)
 DECIMAL(1.E+09)
-Line 28, col 1: unterminated comment
+Line 30, col 1: unterminated comment

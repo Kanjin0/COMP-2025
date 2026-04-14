@@ -12,12 +12,12 @@ NATURAL(1)
 RESERVED(++)
 PRINT
 LPAR
-STRLIT(" Nao deu em nada ")
-Line 9, col 3: illegal character (\)
-Line 9, col 4: illegal character (\)
-Line 9, col 6: unterminated string literal
-Line 9, col 35: invalid escape sequence (\	)
-Line 9, col 10: unterminated string literal
+Line 8, col 36: invalid escape sequence (\)
+Line 8, col 18: unterminated string literal
+STRLIT(" \\ ")
+RPAR
+Line 10, col 26: invalid escape sequence (\	)
+Line 10, col 1: unterminated string literal
 DECIMAL(0.0e0)
 DECIMAL(.0e0)
 DECIMAL(.0)
@@ -27,5 +27,5 @@ RESERVED(--)
 NATURAL(123)
 ARROW
 IDENTIFIER(reallit)
-Line 11, col 29: illegal character (?)
-STRLIT(" \\\\\n \t")
+Line 13, col 29: illegal character (?)
+STRLIT(" \\\\\n 	")

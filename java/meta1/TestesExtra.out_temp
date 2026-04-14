@@ -18,7 +18,7 @@ RESERVED(++)
 RESERVED(protected)
 PRINT
 LPAR
-Line 7, col 18: unterminated string literal
-Line 7, col 51: invalid escape sequence (\h)
-Line 7, col 41: unterminated string literal
-Line 10, col 1: unterminated comment
+Line 7, col 18: unterminated string literal
+Line 8, col 11: invalid escape sequence (\h)
+Line 8, col 1: unterminated string literal
+Line 12, col 1: unterminated comment

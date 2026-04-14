@@ -690,17 +690,23 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "meta1_lexer.l"
-#line 2 "meta1_lexer.l"
+#line 1 "meta2_lexer.l"
+#line 2 "meta2_lexer.l"
     /* place here any C variables and definitions */
 
     #include <string.h>
     #include <stdlib.h>
     #include <stdio.h>
+    #include "y.tab.h"
+
 
     int line = 1;
     int column = 1;
     int print_tokens = 0;
+
+    int token_line;
+    int token_column;
+    extern int lex_only;
 
     char* string_buffer = NULL;
     int string_buffer_size = 0;
@@ -715,9 +721,26 @@ char *yytext;
     int comment_start_line = 0;
     int comment_start_column = 0;
 
+    /* For error reporting: store the last returned token's text and position */
+    char yyerror_text[1024];   /* enough for any reasonable token */
+    int  yyerror_line;
+    int  yyerror_column;
+
+    #define SAVE_TOKEN_INFO() do { \
+        strncpy(yyerror_text, yytext, sizeof(yyerror_text)-1); \
+        yyerror_text[sizeof(yyerror_text)-1] = '\0'; \
+        yyerror_line   = token_line;   /* already set by YY_USER_ACTION */ \
+        yyerror_column = token_column; \
+    } while(0)
+
     #define STRING_BUFFER_INITIAL_SIZE 64
     #define STRING_BUFFER_GROWTH_FACTOR 2
-    #define YY_USER_ACTION column += yyleng;
+    #define YY_USER_ACTION { \
+        token_line = line; \
+        token_column = column; \
+        column += yyleng; \
+    }
+
 
     void ensure_string_buffer_capacity(int needed_size){
         if(string_buffer_index + needed_size >= string_buffer_size){
@@ -759,17 +782,17 @@ char *yytext;
         string_has_invalid_escape = 0;
     }
 
-#line 763 "lex.yy.c"
+#line 786 "lex.yy.c"
 /* All Java keywords not used in Juc - must be RESERVED */
 /* Number parts */
 /* NATURAL: 0 or sequence starting with non-zero digit, can have underscores, ends with digit */
 /* it needs to be down here, otherwise, some of the reserved words or even other ones might get mistaken as an identifier due to precendence in rule position */
 
-#line 769 "lex.yy.c"
+#line 792 "lex.yy.c"
 
 #define INITIAL 0
 #define MLINE_COMMENT 1
-#define STRLIT 2
+#define STRLITERAL 2
 #define SLINE_COMMENT 3
 
 #ifndef YY_NO_UNISTD_H
@@ -985,14 +1008,14 @@ YY_DECL
 		}
 
 	{
-#line 174 "meta1_lexer.l"
+#line 197 "meta2_lexer.l"
 
 
-#line 177 "meta1_lexer.l"
+#line 200 "meta2_lexer.l"
     /* yytext is a pointer to a string */
 
     /* RESERVED tokens - these must come first */
-#line 996 "lex.yy.c"
+#line 1019 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1051,446 +1074,446 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 180 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 203 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 181 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 204 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 182 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 205 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 183 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 206 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 184 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 207 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 185 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 208 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 186 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 209 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 187 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 210 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 188 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 211 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 189 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 212 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 190 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 213 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 191 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 214 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 192 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 215 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 193 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 216 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 194 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 217 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 195 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 218 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 196 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 219 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 197 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 220 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 198 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 221 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 199 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 222 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 200 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 223 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 201 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 224 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 202 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 225 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 203 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 226 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 204 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 227 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 205 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 228 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 206 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 229 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 207 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 230 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 208 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 231 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 209 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 232 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 210 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 233 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 211 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 234 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 212 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 235 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 213 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 236 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 214 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 237 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 215 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 238 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 216 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 239 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 217 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 240 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 218 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 241 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 219 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 242 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 220 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 243 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 221 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 244 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 222 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 245 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 223 "meta1_lexer.l"
-{ if (print_tokens) printf("RESERVED(%s)\n", yytext); }
+#line 246 "meta2_lexer.l"
+{ if (print_tokens) printf("RESERVED(%s)\n", yytext); SAVE_TOKEN_INFO();  return RESERVED; }
 	YY_BREAK
 /* Multi-character operators */
 case 45:
 YY_RULE_SETUP
-#line 226 "meta1_lexer.l"
-{ if (print_tokens) printf("AND\n"); }
+#line 249 "meta2_lexer.l"
+{ if (print_tokens) printf("AND\n"); SAVE_TOKEN_INFO(); return AND; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 227 "meta1_lexer.l"
-{ if (print_tokens) printf("OR\n"); }
+#line 250 "meta2_lexer.l"
+{ if (print_tokens) printf("OR\n"); SAVE_TOKEN_INFO(); return OR; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 228 "meta1_lexer.l"
-{ if (print_tokens) printf("EQ\n"); }
+#line 251 "meta2_lexer.l"
+{ if (print_tokens) printf("EQ\n"); SAVE_TOKEN_INFO(); return EQ; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 229 "meta1_lexer.l"
-{ if (print_tokens) printf("NE\n"); }
+#line 252 "meta2_lexer.l"
+{ if (print_tokens) printf("NE\n"); SAVE_TOKEN_INFO(); return NE; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 230 "meta1_lexer.l"
-{ if (print_tokens) printf("GE\n"); }
+#line 253 "meta2_lexer.l"
+{ if (print_tokens) printf("GE\n"); SAVE_TOKEN_INFO(); return GE; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 231 "meta1_lexer.l"
-{ if (print_tokens) printf("LE\n"); }
+#line 254 "meta2_lexer.l"
+{ if (print_tokens) printf("LE\n"); SAVE_TOKEN_INFO(); return LE; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 232 "meta1_lexer.l"
-{ if (print_tokens) printf("ARROW\n"); }
+#line 255 "meta2_lexer.l"
+{ if (print_tokens) printf("ARROW\n"); SAVE_TOKEN_INFO(); return ARROW; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 233 "meta1_lexer.l"
-{ if (print_tokens) printf("LSHIFT\n"); }
+#line 256 "meta2_lexer.l"
+{ if (print_tokens) printf("LSHIFT\n"); SAVE_TOKEN_INFO(); return LSHIFT; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 234 "meta1_lexer.l"
-{ if (print_tokens) printf("RSHIFT\n"); }
+#line 257 "meta2_lexer.l"
+{ if (print_tokens) printf("RSHIFT\n"); SAVE_TOKEN_INFO(); return RSHIFT; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 235 "meta1_lexer.l"
-{ if (print_tokens) printf("XOR\n"); }
+#line 258 "meta2_lexer.l"
+{ if (print_tokens) printf("XOR\n"); SAVE_TOKEN_INFO(); return XOR; }
 	YY_BREAK
 /* Single-character operators - STAR absolutely first */
 case 55:
 YY_RULE_SETUP
-#line 238 "meta1_lexer.l"
-{ if (print_tokens) printf("STAR\n"); }
+#line 261 "meta2_lexer.l"
+{ if (print_tokens) printf("STAR\n"); SAVE_TOKEN_INFO(); return STAR; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 239 "meta1_lexer.l"
-{ if (print_tokens) printf("DIV\n"); }
+#line 262 "meta2_lexer.l"
+{ if (print_tokens) printf("DIV\n"); SAVE_TOKEN_INFO(); return DIV; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 240 "meta1_lexer.l"
-{ if (print_tokens) printf("MOD\n"); }
+#line 263 "meta2_lexer.l"
+{ if (print_tokens) printf("MOD\n"); SAVE_TOKEN_INFO(); return MOD; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 241 "meta1_lexer.l"
-{ if (print_tokens) printf("PLUS\n"); }
+#line 264 "meta2_lexer.l"
+{ if (print_tokens) printf("PLUS\n"); SAVE_TOKEN_INFO(); return PLUS; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 242 "meta1_lexer.l"
-{ if (print_tokens) printf("MINUS\n"); }
+#line 265 "meta2_lexer.l"
+{ if (print_tokens) printf("MINUS\n"); SAVE_TOKEN_INFO(); return MINUS; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 243 "meta1_lexer.l"
-{ if (print_tokens) printf("ASSIGN\n"); }
+#line 266 "meta2_lexer.l"
+{ if (print_tokens) printf("ASSIGN\n"); SAVE_TOKEN_INFO(); return ASSIGN; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 244 "meta1_lexer.l"
-{ if (print_tokens) printf("COMMA\n"); }
+#line 267 "meta2_lexer.l"
+{ if (print_tokens) printf("COMMA\n"); SAVE_TOKEN_INFO(); return COMMA; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 245 "meta1_lexer.l"
-{ if (print_tokens) printf("LT\n"); }
+#line 268 "meta2_lexer.l"
+{ if (print_tokens) printf("LT\n"); SAVE_TOKEN_INFO(); return LT; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 246 "meta1_lexer.l"
-{ if (print_tokens) printf("GT\n"); }
+#line 269 "meta2_lexer.l"
+{ if (print_tokens) printf("GT\n"); SAVE_TOKEN_INFO(); return GT; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 247 "meta1_lexer.l"
-{ if (print_tokens) printf("NOT\n"); }
+#line 270 "meta2_lexer.l"
+{ if (print_tokens) printf("NOT\n"); SAVE_TOKEN_INFO(); return NOT; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 248 "meta1_lexer.l"
-{ if (print_tokens) printf("LPAR\n"); }
+#line 271 "meta2_lexer.l"
+{ if (print_tokens) printf("LPAR\n"); SAVE_TOKEN_INFO(); return LPAR; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 249 "meta1_lexer.l"
-{ if (print_tokens) printf("RPAR\n"); }
+#line 272 "meta2_lexer.l"
+{ if (print_tokens) printf("RPAR\n"); SAVE_TOKEN_INFO(); return RPAR; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 250 "meta1_lexer.l"
-{ if (print_tokens) printf("LBRACE\n"); }
+#line 273 "meta2_lexer.l"
+{ if (print_tokens) printf("LBRACE\n"); SAVE_TOKEN_INFO(); return LBRACE; }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 251 "meta1_lexer.l"
-{ if (print_tokens) printf("RBRACE\n"); }
+#line 274 "meta2_lexer.l"
+{ if (print_tokens) printf("RBRACE\n"); SAVE_TOKEN_INFO(); return RBRACE; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 252 "meta1_lexer.l"
-{ if (print_tokens) printf("LSQ\n"); }
+#line 275 "meta2_lexer.l"
+{ if (print_tokens) printf("LSQ\n"); SAVE_TOKEN_INFO(); return LSQ; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 253 "meta1_lexer.l"
-{ if (print_tokens) printf("RSQ\n"); }
+#line 276 "meta2_lexer.l"
+{ if (print_tokens) printf("RSQ\n"); SAVE_TOKEN_INFO(); return RSQ; }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 254 "meta1_lexer.l"
-{ if (print_tokens) printf("SEMICOLON\n"); }
+#line 277 "meta2_lexer.l"
+{ if (print_tokens) printf("SEMICOLON\n"); SAVE_TOKEN_INFO(); return SEMICOLON; }
 	YY_BREAK
 /* Keywords that ARE used in Juc */
 case 72:
 YY_RULE_SETUP
-#line 257 "meta1_lexer.l"
-{ if (print_tokens) printf("BOOLLIT(%s)\n",yytext); }
+#line 280 "meta2_lexer.l"
+{ if (print_tokens) printf("BOOLLIT(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return BOOLLIT; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 258 "meta1_lexer.l"
-{ if (print_tokens) printf("BOOL\n"); }
+#line 281 "meta2_lexer.l"
+{ if (print_tokens) printf("BOOL\n"); SAVE_TOKEN_INFO(); return BOOL; }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 259 "meta1_lexer.l"
-{ if (print_tokens) printf("CLASS\n"); }
+#line 282 "meta2_lexer.l"
+{ if (print_tokens) printf("CLASS\n"); SAVE_TOKEN_INFO(); return CLASS; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 260 "meta1_lexer.l"
-{ if (print_tokens) printf("DOTLENGTH\n"); }
+#line 283 "meta2_lexer.l"
+{ if (print_tokens) printf("DOTLENGTH\n"); SAVE_TOKEN_INFO(); return DOTLENGTH; }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 261 "meta1_lexer.l"
-{ if (print_tokens) printf("DOUBLE\n"); }
+#line 284 "meta2_lexer.l"
+{ if (print_tokens) printf("DOUBLE\n"); SAVE_TOKEN_INFO(); return DOUBLE; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 262 "meta1_lexer.l"
-{ if (print_tokens) printf("ELSE\n"); }
+#line 285 "meta2_lexer.l"
+{ if (print_tokens) printf("ELSE\n"); SAVE_TOKEN_INFO(); return ELSE; }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 263 "meta1_lexer.l"
-{ if (print_tokens) printf("IF\n"); }
+#line 286 "meta2_lexer.l"
+{ if (print_tokens) printf("IF\n"); SAVE_TOKEN_INFO(); return IF; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 264 "meta1_lexer.l"
-{ if (print_tokens) printf("INT\n"); }
+#line 287 "meta2_lexer.l"
+{ if (print_tokens) printf("INT\n"); SAVE_TOKEN_INFO(); return INT; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 265 "meta1_lexer.l"
-{ if (print_tokens) printf("PRINT\n"); }
+#line 288 "meta2_lexer.l"
+{ if (print_tokens) printf("PRINT\n"); SAVE_TOKEN_INFO(); return PRINT; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 266 "meta1_lexer.l"
-{ if (print_tokens) printf("PARSEINT\n"); }
+#line 289 "meta2_lexer.l"
+{ if (print_tokens) printf("PARSEINT\n"); SAVE_TOKEN_INFO(); return PARSEINT; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 267 "meta1_lexer.l"
-{ if (print_tokens) printf("PUBLIC\n"); }
+#line 290 "meta2_lexer.l"
+{ if (print_tokens) printf("PUBLIC\n"); SAVE_TOKEN_INFO(); return PUBLIC; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 268 "meta1_lexer.l"
-{ if (print_tokens) printf("RETURN\n"); }
+#line 291 "meta2_lexer.l"
+{ if (print_tokens) printf("RETURN\n"); SAVE_TOKEN_INFO(); return RETURN; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 269 "meta1_lexer.l"
-{ if (print_tokens) printf("STATIC\n"); }
+#line 292 "meta2_lexer.l"
+{ if (print_tokens) printf("STATIC\n"); SAVE_TOKEN_INFO(); return STATIC; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 270 "meta1_lexer.l"
-{ if (print_tokens) printf("STRING\n"); }
+#line 293 "meta2_lexer.l"
+{ if (print_tokens) printf("STRING\n"); SAVE_TOKEN_INFO(); return STRING; }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 271 "meta1_lexer.l"
-{ if (print_tokens) printf("VOID\n"); }
+#line 294 "meta2_lexer.l"
+{ if (print_tokens) printf("VOID\n"); SAVE_TOKEN_INFO(); return VOID; }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 272 "meta1_lexer.l"
-{ if (print_tokens) printf("WHILE\n"); }
+#line 295 "meta2_lexer.l"
+{ if (print_tokens) printf("WHILE\n"); SAVE_TOKEN_INFO(); return WHILE; }
 	YY_BREAK
 /* Comment patterns */
 case 88:
 YY_RULE_SETUP
-#line 275 "meta1_lexer.l"
+#line 298 "meta2_lexer.l"
 { 
     BEGIN(MLINE_COMMENT); 
     comment_start_line = line;
@@ -1499,61 +1522,61 @@ YY_RULE_SETUP
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 280 "meta1_lexer.l"
+#line 303 "meta2_lexer.l"
 { BEGIN(SLINE_COMMENT); }
 	YY_BREAK
 /* treating general stuff */
 /* DECIMAL patterns - ordered from most specific to least specific */
 case 90:
 YY_RULE_SETUP
-#line 285 "meta1_lexer.l"
-{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+#line 308 "meta2_lexer.l"
+{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return DECIMAL; }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 286 "meta1_lexer.l"
-{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+#line 309 "meta2_lexer.l"
+{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return DECIMAL; }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 287 "meta1_lexer.l"
-{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+#line 310 "meta2_lexer.l"
+{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return DECIMAL; }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 288 "meta1_lexer.l"
-{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+#line 311 "meta2_lexer.l"
+{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return DECIMAL; }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 289 "meta1_lexer.l"
-{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+#line 312 "meta2_lexer.l"
+{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return DECIMAL; }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 290 "meta1_lexer.l"
-{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+#line 313 "meta2_lexer.l"
+{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return DECIMAL; }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 291 "meta1_lexer.l"
-{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); }
+#line 314 "meta2_lexer.l"
+{ if (print_tokens) printf("DECIMAL(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return DECIMAL; }
 	YY_BREAK
 /* Then NATURAL */
 case 97:
 YY_RULE_SETUP
-#line 294 "meta1_lexer.l"
-{ if (print_tokens) printf("NATURAL(%s)\n",yytext); }
+#line 317 "meta2_lexer.l"
+{ if (print_tokens) printf("NATURAL(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return NATURAL; }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 296 "meta1_lexer.l"
-{ if (print_tokens) printf("IDENTIFIER(%s)\n",yytext); }
+#line 319 "meta2_lexer.l"
+{ if (print_tokens) printf("IDENTIFIER(%s)\n",yytext); if (!lex_only) yylval.str = strdup(yytext); SAVE_TOKEN_INFO(); return IDENTIFIER; }
 	YY_BREAK
 case 99:
 /* rule 99 can match eol */
 YY_RULE_SETUP
-#line 298 "meta1_lexer.l"
+#line 321 "meta2_lexer.l"
 { 
     line++;
     column = 1;
@@ -1561,7 +1584,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 303 "meta1_lexer.l"
+#line 326 "meta2_lexer.l"
 { 
     /* No printing - just consume whitespace */
 }
@@ -1569,9 +1592,9 @@ YY_RULE_SETUP
 /* treating strings */
 case 101:
 YY_RULE_SETUP
-#line 309 "meta1_lexer.l"
+#line 332 "meta2_lexer.l"
 { 
-    BEGIN(STRLIT); 
+    BEGIN(STRLITERAL); 
     init_string_buffer(); 
     string_start_line = line;
     string_start_column = column - yyleng;
@@ -1580,7 +1603,7 @@ YY_RULE_SETUP
 /* Valid escape sequences - store as backslash + character */
 case 102:
 YY_RULE_SETUP
-#line 317 "meta1_lexer.l"
+#line 340 "meta2_lexer.l"
 {
     ensure_string_buffer_capacity(2);
     string_buffer[string_buffer_index++] = '\\';
@@ -1590,7 +1613,7 @@ YY_RULE_SETUP
 /* Invalid escape sequences - any other backslash combination */
 case 103:
 YY_RULE_SETUP
-#line 324 "meta1_lexer.l"
+#line 347 "meta2_lexer.l"
 { 
     printf("Line %d, col %d: invalid escape sequence (%s)\n", line, column - yyleng, yytext);
     string_has_invalid_escape = 1;
@@ -1601,7 +1624,7 @@ YY_RULE_SETUP
 case 104:
 /* rule 104 can match eol */
 YY_RULE_SETUP
-#line 331 "meta1_lexer.l"
+#line 354 "meta2_lexer.l"
 {
     printf("Line %d, col %d: unterminated string literal\n", 
            string_start_line, string_start_column);
@@ -1614,7 +1637,7 @@ YY_RULE_SETUP
 /* Normal string characters - store as-is */
 case 105:
 YY_RULE_SETUP
-#line 341 "meta1_lexer.l"
+#line 364 "meta2_lexer.l"
 {
     ensure_string_buffer_capacity(yyleng);
     memcpy(string_buffer + string_buffer_index, yytext, yyleng);
@@ -1624,25 +1647,37 @@ YY_RULE_SETUP
 /* End of string */
 case 106:
 YY_RULE_SETUP
-#line 348 "meta1_lexer.l"
+#line 371 "meta2_lexer.l"
 { 
     if (string_has_invalid_escape) {
-        /* String had invalid escapes - already reported, just drop the string */
+        /* Invalid string: discard, no token returned */
         free_string_buffer();
         BEGIN(INITIAL);
     } else {
-        /* Valid string - print it */
+        /* Valid string: build the literal text for error reporting */
         ensure_string_buffer_capacity(1);
         string_buffer[string_buffer_index] = '\0';
         if (print_tokens) printf("STRLIT(\"%s\")\n", string_buffer);
+        if (!lex_only) yylval.str = strdup(string_buffer);
+        
+        /* Save full literal (including quotes) and its start position */
+        int len = strlen(string_buffer) + 3;   // +2 quotes + null
+        char full_literal[len];
+        snprintf(full_literal, len, "\"%s\"", string_buffer);
+        strncpy(yyerror_text, full_literal, sizeof(yyerror_text)-1);
+        yyerror_text[sizeof(yyerror_text)-1] = '\0';
+        yyerror_line   = string_start_line;
+        yyerror_column = string_start_column;
+        
         free_string_buffer();
         BEGIN(INITIAL);
+        return STRLIT;
     }
 }
 	YY_BREAK
 /* EOF in string */
-case YY_STATE_EOF(STRLIT):
-#line 364 "meta1_lexer.l"
+case YY_STATE_EOF(STRLITERAL):
+#line 399 "meta2_lexer.l"
 {
     printf("Line %d, col %d: unterminated string literal\n", 
            string_start_line, string_start_column);
@@ -1654,13 +1689,13 @@ case YY_STATE_EOF(STRLIT):
 /* treating comments - continuation */
 case 107:
 YY_RULE_SETUP
-#line 375 "meta1_lexer.l"
+#line 410 "meta2_lexer.l"
 { BEGIN(INITIAL); }
 	YY_BREAK
 case 108:
 /* rule 108 can match eol */
 YY_RULE_SETUP
-#line 377 "meta1_lexer.l"
+#line 412 "meta2_lexer.l"
 { 
     line++; 
     column = 1; 
@@ -1668,11 +1703,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 382 "meta1_lexer.l"
+#line 417 "meta2_lexer.l"
 { }
 	YY_BREAK
 case YY_STATE_EOF(MLINE_COMMENT):
-#line 384 "meta1_lexer.l"
+#line 419 "meta2_lexer.l"
 { 
     printf("Line %d, col %d: unterminated comment\n", 
            comment_start_line, comment_start_column);
@@ -1683,7 +1718,7 @@ case YY_STATE_EOF(MLINE_COMMENT):
 case 110:
 /* rule 110 can match eol */
 YY_RULE_SETUP
-#line 391 "meta1_lexer.l"
+#line 426 "meta2_lexer.l"
 { 
     line++; 
     column = 1; 
@@ -1692,17 +1727,17 @@ YY_RULE_SETUP
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 397 "meta1_lexer.l"
+#line 432 "meta2_lexer.l"
 { }
 	YY_BREAK
 case YY_STATE_EOF(SLINE_COMMENT):
-#line 399 "meta1_lexer.l"
+#line 434 "meta2_lexer.l"
 { BEGIN(INITIAL); }
 	YY_BREAK
 /* illegal characters - everything else */
 case 112:
 YY_RULE_SETUP
-#line 404 "meta1_lexer.l"
+#line 439 "meta2_lexer.l"
 { 
     printf("Line %d, col %d: illegal character (%s)\n", 
            line, column - yyleng, yytext); 
@@ -1710,10 +1745,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 409 "meta1_lexer.l"
+#line 444 "meta2_lexer.l"
 ECHO;
 	YY_BREAK
-#line 1717 "lex.yy.c"
+#line 1752 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2718,18 +2753,8 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 409 "meta1_lexer.l"
+#line 444 "meta2_lexer.l"
 
-
-extern int yylex();
-int main(int argc, char **argv) {
-    if (argc > 1 && strcmp(argv[1], "-l") == 0) {
-        print_tokens = 1;
-    }
-    yylex();
-    free_string_buffer();
-    return 0;
-}
 
 int yywrap() {
     return 1;

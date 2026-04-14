@@ -15,22 +15,18 @@ DECIMAL(0.124)
 NATURAL(24)
 IDENTIFIER(_)
 DECIMAL(.52)
-NATURAL(0)
-DECIMAL(24.)
+DECIMAL(024.)
 IDENTIFIER(E)
 NATURAL(24)
 IDENTIFIER(_E)
-NATURAL(0)
-DECIMAL(2.14)
+DECIMAL(02.14)
 DECIMAL(0.02)
 DECIMAL(.01)
 DECIMAL(.999)
 DECIMAL(423e-3)
 DECIMAL(0E+4)
-NATURAL(0)
-DECIMAL(5e2)
-NATURAL(0)
-DECIMAL(9.5e+1)
+DECIMAL(05e2)
+DECIMAL(09.5e+1)
 DECIMAL(0.4e2)
 DECIMAL(64.8E-2)
 DECIMAL(64.)
@@ -44,20 +40,20 @@ Line 27, col 1: illegal character (.)
 IDENTIFIER(e2)
 STRLIT("string")
 STRLIT("varios escapes \n \f \r")
-Line 31, col 1: unterminated string literal
-STRLIT("")
-IDENTIFIER(newline)
-Line 32, col 9: unterminated string literal
+Line 31, col 1: unterminated string literal
+Line 32, col 2: invalid escape sequence (\)
+Line 32, col 1: unterminated string literal
+STRLIT("newline")
 STRLIT("\"\"")
 STRLIT("")
 STRLIT("")
 STRLIT("\n")
-Line 35, col 1: unterminated string literal
-Line 35, col 4: unterminated string literal
+Line 37, col 1: unterminated string literal
+Line 38, col 1: unterminated string literal
 STRLIT("")
 IDENTIFIER(aaaaa)
-Line 37, col 1: unterminated string literal
+Line 41, col 1: unterminated string literal
 STRLIT("   ")
-Line 37, col 34: invalid escape sequence (\h)
-Line 37, col 12: unterminated string literal
-Line 37, col 38: unterminated string literal
+Line 42, col 29: invalid escape sequence (\h)
+Line 42, col 7: unterminated string literal
+Line 43, col 1: unterminated string literal
