@@ -20,12 +20,6 @@ int print_ast_flag = 0;
 int syntax_errors = 0;
 ast_node *ast_root = NULL;
 
-// Um dos erros que está a dar é como o do lexer, onde a coluna do erro está incrementada até ao final
-// de onde o erro acaba e não onde ele começa
-
-// Para além disso, não está a incluir o campo da string que originou o erro (yytext, i mean)
-// pode estar a consumí-lo antes de o poder imprimir, fazendo com que não haja nada
-
 void yyerror(const char *s) {
     printf("Line %d, col %d: %s: %s\n", 
            yyerror_line, yyerror_column, s, yyerror_text);
@@ -45,8 +39,8 @@ void yyerror(const char *s) {
 
 %type <node> Program ProgramDeclList MethodDecl FieldDecl FieldIDList Type
 %type <node> MethodHeader FormalParams FormalParamsList MethodBody MethodBodyContent
-%type <node> VarDecl VarIDList Statement StatementList Expr ExprList
-%type <node> MethodInvocation Assignment ParseArgs
+%type <node> VarDecl VarIDList Statement StatementList Expr ExprNoAssign
+%type <node> MethodInvocation Assignment ParseArgs ExprList
 
 %right ASSIGN
 %left OR
@@ -228,13 +222,12 @@ VarIDList: VarIDList COMMA IDENTIFIER {
 ;
 
 Statement: LBRACE StatementList RBRACE {
+    /* Changed: empty block -> NULL, single statement -> drop block, multiple -> wrap in Block */
     if ($2 == NULL) {
-        $$ = create_node("Block", NULL);
+        $$ = NULL;                     /* empty block: no node */
     } else if ($2->sibling == NULL) { 
-        // Exactly 1 child -> drop block
-        $$ = $2;
+        $$ = $2;                       /* exactly one child -> drop the block */
     } else {
-        // Multi statement -> wrap in block
         $$ = create_node("Block", NULL);
         add_child($$, $2);
     }
@@ -321,36 +314,38 @@ ParseArgs: PARSEINT LPAR IDENTIFIER LSQ Expr RSQ RPAR {
 | PARSEINT LPAR error RPAR { $$ = NULL; }
 ;
 
-Expr: Expr PLUS Expr { $$ = create_node("Add", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr MINUS Expr { $$ = create_node("Sub", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr STAR Expr { $$ = create_node("Mul", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr DIV Expr { $$ = create_node("Div", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr MOD Expr { $$ = create_node("Mod", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr AND Expr { $$ = create_node("And", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr OR Expr { $$ = create_node("Or", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr XOR Expr { $$ = create_node("Xor", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr LSHIFT Expr { $$ = create_node("Lshift", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr RSHIFT Expr { $$ = create_node("Rshift", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr EQ Expr  { $$ = create_node("Eq", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr GE Expr  { $$ = create_node("Ge", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr GT Expr  { $$ = create_node("Gt", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr LE Expr  { $$ = create_node("Le", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr LT Expr  { $$ = create_node("Lt", NULL); add_child($$, $1); add_child($$, $3); }
-    | Expr NE Expr  { $$ = create_node("Ne", NULL); add_child($$, $1); add_child($$, $3); }
-    | MINUS Expr %prec UMINUS { $$ = create_node("Minus", NULL); add_child($$, $2); }
-    | NOT Expr { $$ = create_node("Not", NULL); add_child($$, $2); }
-    | PLUS Expr %prec UPLUS { $$ = create_node("Plus", NULL); add_child($$, $2); }
-    | LPAR Expr RPAR { $$ = $2; }
-    | MethodInvocation { $$ = $1; }
-    | Assignment { $$ = $1; }
-    | ParseArgs { $$ = $1; }
-    | IDENTIFIER DOTLENGTH { $$ = create_node("Length", NULL); add_child($$, create_node("Identifier", $1)); }
-    | IDENTIFIER { $$ = create_node("Identifier", $1); }
-    | NATURAL { $$ = create_node("Natural", $1); }
-    | DECIMAL { $$ = create_node("Decimal", $1); }
-    | BOOLLIT { $$ = create_node("BoolLit", $1); }
-    | LPAR error RPAR { $$ = NULL; }
-    ;
+/* ----- Expression grammar with split levels ----- */
+Expr: ExprNoAssign | Assignment ;
+
+ExprNoAssign: ExprNoAssign PLUS ExprNoAssign   { $$ = create_node("Add", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign MINUS ExprNoAssign          { $$ = create_node("Sub", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign STAR ExprNoAssign           { $$ = create_node("Mul", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign DIV ExprNoAssign            { $$ = create_node("Div", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign MOD ExprNoAssign            { $$ = create_node("Mod", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign AND ExprNoAssign            { $$ = create_node("And", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign OR ExprNoAssign             { $$ = create_node("Or", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign XOR ExprNoAssign            { $$ = create_node("Xor", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign LSHIFT ExprNoAssign         { $$ = create_node("Lshift", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign RSHIFT ExprNoAssign         { $$ = create_node("Rshift", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign EQ ExprNoAssign             { $$ = create_node("Eq", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign GE ExprNoAssign             { $$ = create_node("Ge", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign GT ExprNoAssign             { $$ = create_node("Gt", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign LE ExprNoAssign             { $$ = create_node("Le", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign LT ExprNoAssign             { $$ = create_node("Lt", NULL); add_child($$, $1); add_child($$, $3); }
+    | ExprNoAssign NE ExprNoAssign             { $$ = create_node("Ne", NULL); add_child($$, $1); add_child($$, $3); }
+    | MINUS ExprNoAssign %prec UMINUS          { $$ = create_node("Minus", NULL); add_child($$, $2); }
+    | NOT ExprNoAssign                         { $$ = create_node("Not", NULL); add_child($$, $2); }
+    | PLUS ExprNoAssign %prec UPLUS            { $$ = create_node("Plus", NULL); add_child($$, $2); }
+    | LPAR Expr RPAR                           { $$ = $2; }
+    | MethodInvocation                         { $$ = $1; }
+    | ParseArgs                                { $$ = $1; }
+    | IDENTIFIER DOTLENGTH                     { $$ = create_node("Length", NULL); add_child($$, create_node("Identifier", $1)); }
+    | IDENTIFIER                               { $$ = create_node("Identifier", $1); }
+    | NATURAL                                  { $$ = create_node("Natural", $1); }
+    | DECIMAL                                  { $$ = create_node("Decimal", $1); }
+    | BOOLLIT                                  { $$ = create_node("BoolLit", $1); }
+    | LPAR error RPAR                          { $$ = NULL; }
+;
 
 %%
 

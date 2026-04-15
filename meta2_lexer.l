@@ -395,12 +395,14 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
 }
 
     /* EOF in string */
-<STRLITERAL><<EOF>>           {
+<STRLITERAL><<EOF>> {
     printf("Line %d, col %d: unterminated string literal\n", 
            string_start_line, string_start_column);
-    free_string_buffer();
+    yyerror_text[0] = '\0';
+    yyerror_line = line;
+    yyerror_column = column;
     BEGIN(INITIAL);
-    yyterminate();
+    return 0;
 }
 
 
@@ -415,11 +417,14 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
 
 <MLINE_COMMENT>.                 { }
 
-<MLINE_COMMENT><<EOF>>           { 
+<MLINE_COMMENT><<EOF>> { 
     printf("Line %d, col %d: unterminated comment\n", 
            comment_start_line, comment_start_column);
+    yyerror_text[0] = '\0';
+    yyerror_line = line;
+    yyerror_column = column;
     BEGIN(INITIAL);
-    yyterminate();
+    return 0;
 }
 
 <SLINE_COMMENT>\n|\r\n|\r        { 
@@ -430,11 +435,23 @@ identifier  [_$a-zA-Z][_$a-zA-Z0-9]*
 
 <SLINE_COMMENT>.                 { }
 
-<SLINE_COMMENT><<EOF>>           { BEGIN(INITIAL); }
+<SLINE_COMMENT><<EOF>> { 
+    yyerror_text[0] = '\0';
+    yyerror_line = line;
+    yyerror_column = column;
+    BEGIN(INITIAL);
+    return 0;
+}
 
+    /* Default EOF rule (when not in a comment or string) */
+<<EOF>> {
+    yyerror_text[0] = '\0';
+    yyerror_line = line;
+    yyerror_column = column;
+    return 0;
+}
 
     /* illegal characters - everything else */
-
 .                          { 
     printf("Line %d, col %d: illegal character (%s)\n", 
            line, column - yyleng, yytext); 
