@@ -42,7 +42,7 @@ if [[ -d meta1 ]]; then #if you want to run meta1 tests too, change the "meta1" 
     done
 fi
 
-if [[ -d java/meta2 ]]; then #if you want to run meta2 tests too, change "meta2" to "java/meta2"
+if [[ -d meta2 ]]; then #if you want to run meta2 tests too, change "meta2" to "java/meta2"
     for inp in java/meta2/*.java; do
         total=$(( $total + 1 ))
         echo "$inp"
@@ -51,6 +51,29 @@ if [[ -d java/meta2 ]]; then #if you want to run meta2 tests too, change "meta2"
         flag="-t"
         if [[ "$inp" == *_e2.java ]]; then
             flag="-e2"
+        fi
+        if $exe $flag < "$inp" > "$tmp"; then
+            lines=$(diff $out $tmp | wc -l)
+            if [[ $lines -gt 0 ]]; then
+                echo " Wrong Answer, run 'diff $out $tmp' to see the differences"
+            else
+                accepted=$(( $accepted + 1 ))
+            fi
+        else
+            echo " Runtime Error, failed to execute '$exe'"
+        fi
+    done
+fi
+
+if [[ -d java/meta3 ]]; then #if you want to run meta3 tests too, change "meta3" to "java/meta3"
+    for inp in java/meta3/*.java; do
+        total=$(( $total + 1 ))
+        echo "$inp"
+        out=${inp%.java}.out
+        tmp=${inp%.java}.out_temp
+        flag="-s"
+        if [[ "$inp" == *_e3.java ]]; then
+            flag="-e3"
         fi
         if $exe $flag < "$inp" > "$tmp"; then
             lines=$(diff $out $tmp | wc -l)
