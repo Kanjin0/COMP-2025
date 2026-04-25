@@ -404,28 +404,30 @@ static enum type check_expr(ast_node *node, symbol_table *local_tbl) {
                 node->type = type_undef;
                 node->type_set = 1;
             } else {
-                /* prefer a field/variable over a method with the same name */
+                /* if the symbol is a method, try to find a variable/field with the same name */
                 if (s->param_count >= 0) {
-                    symbol *nonmethod = NULL;
+                    symbol *var = NULL;
                     for (symbol *cur = global_table->head; cur; cur = cur->next)
                         if (strcmp(cur->name, node->value) == 0 && cur->param_count < 0) {
-                            nonmethod = cur; break;
+                            var = cur; break;
                         }
-                    if (!nonmethod && local_tbl)
+                    if (!var && local_tbl)
                         for (symbol *cur = local_tbl->head; cur; cur = cur->next)
                             if (strcmp(cur->name, node->value) == 0 && cur->param_count < 0) {
-                                nonmethod = cur; break;
+                                var = cur; break;
                             }
-                    if (nonmethod) s = nonmethod;
+                    if (var) {
+                        s = var;   /* use the variable/field instead */
+                    } else {
+                        printf("Line %d, col %d: Cannot find symbol %s\n",
+                               node->line, node->column, node->value);
+                        semantic_errors++;
+                        node->type = type_undef;
+                        node->type_set = 1;
+                        return node->type;
+                    }
                 }
-
-                if (s->param_count >= 0) {
-                    char *sig = build_param_sig(s->param_types, s->param_count);
-                    node->annotated_str = sig;
-                    annotate(node, s->type);
-                } else {
-                    annotate(node, s->type);
-                }
+                annotate(node, s->type);
             }
             return node->type;
         }
@@ -471,7 +473,6 @@ static enum type check_expr(ast_node *node, symbol_table *local_tbl) {
             enum type ltype = check_expr(lhs, local_tbl);
             enum type rtype = rhs ? check_expr(rhs, local_tbl) : type_undef;
 
-            /* assignment to/from arrays is never allowed */
             if (ltype == type_string_array || rtype == type_string_array) {
                 printf("Line %d, col %d: Operator = cannot be applied to types %s, %s\n",
                        node->line, node->column, type_name(ltype), type_name(rtype));
