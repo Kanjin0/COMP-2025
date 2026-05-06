@@ -1,4 +1,4 @@
-%{
+%{  /* Autores: Sílvia Romão 2023211684 Rodrigo Barata 2022212664*/
     /* place here any C variables and definitions */
 
     #include <string.h>
