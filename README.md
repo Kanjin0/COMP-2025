@@ -1,6 +1,6 @@
 # Compiladores
 
-Este repositório reúne os **casos de teste criados por estudantes** para verificarem os compiladores.
+Este repositório reúne os **casos de teste criados por estudantes** para verificarem compiladores da linguagem JUC assim como uma versão desenvolvida por estudantes de engenharia informática em período de licenciatura.
 
 * Cada estudante deve contribuir com programas que lhe tenham sido úteis.
 * Partilhar um caso de teste por meta é suficiente: qualidade é melhor do que quantidade.
